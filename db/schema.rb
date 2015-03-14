@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313055642) do
+ActiveRecord::Schema.define(version: 20150314052721) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(version: 20150313055642) do
   create_table "comments", force: :cascade do |t|
     t.string "author"
     t.string "text"
+    t.string "post"
   end
 
   create_table "posts", force: :cascade do |t|
     t.string "author"
     t.string "label"
     t.string "text"
-    t.string "tags"
   end
 
   create_table "posts_tags", force: :cascade do |t|
