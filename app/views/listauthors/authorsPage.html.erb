@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
+	</head>
+	<body>
+		<div style="width:70%; margin:50px auto;">
+			<h2>Авторы</h2>
+			<div id="tableAuthors">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+	function getList(){
+		$.ajax({
+	  		url: 'authors/list',
+	  		success: function(data){
+		    	var table = $('<table class="table table-bordered table-hover" id="paggination"></table>');
+		    	
+				var thead =$('<thead></thead>');
+
+				var tr =$('<tr></tr>');
+
+				var td = $("<td></td>").html("ID");
+		    	tr.append(td);
+
+	    		var td = $("<td></td>").html("Имя");
+	    		tr.append(td);
+
+	    		var td = $("<td></td>").html("Email");
+	    		tr.append(td);
+
+	    		var td = $("<td></td>").html("Город");
+	    		tr.append(td);
+
+	    		var td = $("<td></td>").html("Адресс");
+	    		tr.append(td);
+
+		    	var td = $("<td></td>").html("Дата рождения");
+	    		tr.append(td);
+
+		    	thead.append(tr);
+				table.append(thead);
+
+	    		for (var i=0; i<data.length; i++){
+		    		var tr = $('<tr onclick="infoAuthor('+data[i].id+')"></tr>');
+
+		    		var td = $("<td></td>").html(data[i].id);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].name);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].email);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].city);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].adress);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].birth);
+		    		tr.append(td);
+
+		    		table.append(tr);
+	    		}
+				$("#tableAuthors").html(table);	
+				$("#paggination").DataTable();
+	  		}
+		})
+	}
+	getList();
+	function infoAuthor(id){
+		$.ajax({
+	  		url: 'authors/info',
+	  		data:{	
+	  			id:id  		
+	  		},
+	  		success: function(data){
+	  			console.log(data);
+	  		}
+		})
+	}
+	</script>
+</html>
