@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Статья</title>
+	</head>
+	<body>
+		<div style="width:70%; margin:50px auto;">
+			<h2>Статья</h2>
+			<div class="bs-callout bs-callout-info" id="post">
+				<h2 id="label"></h2>
+				<h6 id="tags"></h6>
+				<h4 id="author"></h4>
+				<blockquote><p id="text"></p></blockquote>
+				<div id="comments"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+	function showPost(){
+		var path = window.location.search.split('=');
+		var id = path[1];
+		$.ajax({
+	  		url: '/getPost',
+	  		data: {
+	  			id:id
+	  		},
+	  		success: function(data){
+	  			$("#label").html(data.label);
+	    		var tags = data.tag;
+	    		for (var j=1; j<tags.length; j++) {
+	    			var tag="";
+	    			if (tags[j]==='"'){
+	    				j++;
+	    				while (tags[j]!='"'){
+	    					tag+=tags[j];
+	    					j++;
+	    				}
+	    				$("#tags").append('<code>'+tag+"</code>");
+	    			}
+	    		}
+	  			$("#author").html("Автор: "+data.name_author);
+	  			$("#text").html(data.text);
+	  		}
+		})
+		$.ajax({
+	  		url: '/getComments',
+	  		data: {
+	  			id:id
+	  		},
+	  		success: function(data){
+				var table = $('<table class="table table-striped"></table>');
+				var tr = $('<tr></tr>');
+	    		var td = $("<th></th>").html("Комментарии");
+	    		tr.append(td);
+	    		$("#comments").html(tr);
+	    		for (var i=0; i<data.length; i++){
+		    		var tr = $('<tr></tr>');
+
+		    		var td = $("<td></td>").html(data[i].name);
+		    		tr.append(td);
+
+		    		var td = $("<td></td>").html(data[i].text);
+		    		tr.append(td);
+
+		    		table.append(tr);
+	    		}
+	    		$("#comments").append(table);
+
+	  		}
+		})
+	}
+	showPost();
+	</script>
+</html>

@@ -1,22 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-tags=Array.new(20)
-i=0
 20.times do
-	tags[i]=Tag.create(label: Faker::Lorem.word)
-	i+=1
+	Tag.create(label: Faker::Lorem.word)
 end
-2.times do 
+rand(15..20).times do
 	author = Author.create(name: Faker::Name.name, email: Faker::Internet.email, city: Faker::Address.city, adress: Faker::Address.street_address, birth: Faker::Date.forward(23))
-	2.times do
-		post = Post.create(author: author.id, label: Faker::Lorem.word, text: Faker::Lorem.sentence,tags: Tag.all.sample(3)) 
-		2.times do
-			comment = Comment.create(author: author.id, text: Faker::Lorem.sentence, post: post.id)
+	rand(10..20).times do
+		post = Post.create(author: author.id, name_author: author.name, label: Faker::Lorem.word, text: Faker::Lorem.sentence,tag: Tag.all.sample(3)) 
+		rand(1..5).times do
+			comment = Comment.create(name: Faker::Name.name, text: Faker::Lorem.sentence, post: post.id)
 		end
 	end
 end

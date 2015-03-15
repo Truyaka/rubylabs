@@ -7,6 +7,18 @@ class ListauthorsController < ApplicationController
 	end
 	def infoAuthor
 		id = params[:id]
-		render json: Author.find(id).to_json
+		posts = Post.order("created_at").where(author: id)
+		render json: posts.to_json
+	end
+	def showPost
+		id = params[:id]
+		render json: Post.find(id).to_json
+	end
+	def showPostComments
+		id = params[:id]
+		render json: Comment.where(post: id)
+	end
+	def showAllPosts
+		render json: Post.all.to_json
 	end
 end

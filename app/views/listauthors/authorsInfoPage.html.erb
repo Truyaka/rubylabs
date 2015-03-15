@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Статьи автора</title>
+	</head>
+	<body>
+		<div style="width:70%; margin:50px auto;">
+			<h2 id="author">Статьи автора</h2>
+			<div id="tableAuthors">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+	function getPosts(){
+		var path = window.location.search.split('=');
+		var id = path[1];
+		$.ajax({
+	  		url: '/articlesauthors',
+	  		data: {
+	  			id:id
+	  		},
+	  		success: function(data){
+	  			$("#author").append(" "+data[0].name_author);
+		    	var table = $('<table class="table table-bordered table-hover" id="paggination"></table>');
+		    	
+				var thead =$('<thead></thead>');
+
+				var tr =$('<tr></tr>');
+
+				var td = $("<th width=30%></th>").html("Статья");
+		    	tr.append(td);
+
+				var td = $("<th></th>").html("Дата создания");
+		    	tr.append(td);
+
+	    		var td = $("<th></th>").html("Теги");
+	    		tr.append(td);
+
+		    	thead.append(tr);
+				table.append(thead);
+
+	    		for (var i=0; i<data.length; i++){
+		    		var tr = $('<tr onclick="infoPost('+data[i].id+')"></tr>');
+
+		    		var td = $("<td></td>").html(data[i].label);
+		    		tr.append(td);
+					
+		    		var td = $("<td></td>").html(new Date(data[i].created_at));
+		    		tr.append(td);
+
+		    		var td = $("<td></td>");
+		    		var tags = data[i].tag;
+		    		console.log(tags);
+		    		for (var j=1; j<tags.length; j++) {
+		    			var tag="";
+		    			console.log(tag);
+		    			if (tags[j]==='"'){
+		    				j++;
+		    				while (tags[j]!='"'){
+		    					tag+=tags[j];
+		    					j++;
+		    				}
+		    				console.log(tag);
+		    				td.append('<code style="margin-right:20px;">'+tag+"</code>");
+		    			}
+		    		}
+		    		tr.append(td);
+
+
+		    		table.append(tr);
+	    		}
+				$("#tableAuthors").html(table);	
+				$("#paggination").DataTable({aaSorting:[]});
+	  		}
+		})
+	}
+	getPosts();
+	function infoPost(id){
+	  	location.href="/post?="+id;
+	}
+	</script>
+</html>

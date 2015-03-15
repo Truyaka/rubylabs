@@ -4,6 +4,7 @@ class CreatePosts < ActiveRecord::Migration
 	    t.string :author
 	    t.string :label
 	    t.string :text
+	    t.string :tag
     end
   end
 end

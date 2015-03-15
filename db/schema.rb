@@ -22,20 +22,26 @@ ActiveRecord::Schema.define(version: 20150314052721) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "author"
+    t.string "name"
     t.string "text"
     t.string "post"
+
+    t.datetime "created_at",  null: false
   end
 
   create_table "posts", force: :cascade do |t|
     t.string "author"
+    t.string "name_author"
     t.string "label"
     t.string "text"
+    t.string "tag"
+
+    t.datetime "created_at",  null: false
   end
 
   create_table "posts_tags", force: :cascade do |t|
-    t.string "post"
-    t.string "tag"
+    t.integer "post_id"
+    t.integer "tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
