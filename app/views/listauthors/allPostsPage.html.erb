@@ -51,18 +51,17 @@
 		    		tr.append(td);
 
 		    		var td = $("<td></td>");
-					var tags = data[i].tag;
-		    		for (var j=1; j<tags.length; j++) {
-		    			var tag="";
-		    			if (tags[j]==='"'){
-		    				j++;
-		    				while (tags[j]!='"'){
-		    					tag+=tags[j];
-		    					j++;
-		    				}
-		    				td.append('<code>'+tag+"</code>");
-		    			}
-		    		}
+	  				tagsParse=data[i].tag.split(/[",:;]/);
+
+	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[4]);
+	  				td.append(tag);
+	  				
+	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[10]);
+	  				td.append(tag);
+
+	  				var tag = $('<code></code>').html(tagsParse[16]);
+	  				td.append(tag);
+
 		    		tr.append(td);
 
 		    		table.append(tr);

@@ -26,18 +26,17 @@
 	  		},
 	  		success: function(data){
 	  			$("#label").html(data.label);
-	    		var tags = data.tag;
-	    		for (var j=1; j<tags.length; j++) {
-	    			var tag="";
-	    			if (tags[j]==='"'){
-	    				j++;
-	    				while (tags[j]!='"'){
-	    					tag+=tags[j];
-	    					j++;
-	    				}
-	    				$("#tags").append('<code>'+tag+"</code>");
-	    			}
-	    		}
+  				tagsParse=data.tag.split(/[",:;]/);
+
+  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[4]);
+  				$("#tags").append(tag);
+  				
+  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[10]);
+  				$("#tags").append(tag);
+
+  				var tag = $('<code></code>').html(tagsParse[16]);
+  				$("#tags").append(tag);
+
 	  			$("#author").html("Автор: "+data.name_author);
 	  			$("#text").html(data.text);
 	  		}

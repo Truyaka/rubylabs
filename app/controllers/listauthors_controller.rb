@@ -21,4 +21,9 @@ class ListauthorsController < ApplicationController
 	def showAllPosts
 		render json: Post.all.to_json
 	end
+	def showPostByTags
+		id = params[:id]
+		tag = Tag.find(id)
+		render json: Post.where(tags: tag).to_json
+	end
 end
