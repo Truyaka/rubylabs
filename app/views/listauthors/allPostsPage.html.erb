@@ -15,6 +15,7 @@
 		$.ajax({
 	  		url: 'posts/list',
 	  		success: function(data){
+	  			console.log(data[0]);
 
 		    	var table = $('<table class="table table-bordered table-hover" id="paggination"></table>');
 		    	
@@ -22,10 +23,10 @@
 
 				var tr =$('<tr></tr>');
 
-				var td = $("<th></th>").html("Автор");
+				var td = $("<th></th>").html("Название статьи");
 		    	tr.append(td);
 
-	    		var td = $("<th></th>").html("Название статьи");
+	    		var td = $("<th></th>").html("Автор");
 	    		tr.append(td);
 
 	    		var td = $("<th></th>").html("Дата создания");
@@ -44,30 +45,28 @@
 		    		var td = $("<td></td>").html(data[i].label);
 		    		tr.append(td);
 
-		    		var td = $("<td></td>").html(data[i].name_author);
+		    		var td = $("<td></td>").html(data[i].author.name);
 		    		tr.append(td);
 
 		    		var td = $("<td></td>").html(new Date(data[i].created_at));
 		    		tr.append(td);
 
-		    		var td = $("<td></td>");
-	  				tagsParse=data[i].tag.split(/[",:;]/);
-
-	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[4]);
-	  				td.append(tag);
-	  				
-	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[10]);
-	  				td.append(tag);
-
-	  				var tag = $('<code></code>').html(tagsParse[16]);
-	  				td.append(tag);
-
+					var td = $("<td></td>");
+					for (var j = 0; j<data[i].tags.length; j++){
+		  				var tag = $('<code style="margin-right:10px;"></code>')
+		  				.html($('<a href="/tag?='+data[i].tags[j].id+'"></a>').html(data[i].tags[j].label));
+		  				td.append(tag);
+					}
 		    		tr.append(td);
 
 		    		table.append(tr);
 	    		}
 				$("#tableAuthors").html(table);	
-				$("#paggination").DataTable();
+				$("#paggination").DataTable({
+					processing: true,
+				    serverSide: true,
+				    ajax: '/posts/list',
+				});
 	  		}
 		})
 	}

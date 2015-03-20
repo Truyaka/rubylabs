@@ -14,29 +14,27 @@
 ActiveRecord::Schema.define(version: 20150314052721) do
 
   create_table "authors", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "city"
-    t.string "adress"
-    t.string "birth"
+    t.string  "name"
+    t.string  "email"
+    t.string  "city"
+    t.string  "adress"
+    t.string  "birth"
+    t.integer "posts"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "name"
-    t.string "text"
-    t.string "post"
-
-    t.datetime "created_at",  null: false
+    t.string  "name"
+    t.string  "text"
+    t.string  "post_id"
+    t.integer "author_id"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "author"
-    t.string "name_author"
-    t.string "label"
-    t.string "text"
-    t.string "tag"
-
-    t.datetime "created_at",  null: false
+    t.string   "label"
+    t.integer  "author_id"
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts_tags", force: :cascade do |t|
@@ -45,7 +43,8 @@ ActiveRecord::Schema.define(version: 20150314052721) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "label"
+    t.string  "label"
+    t.integer "post_id"
   end
 
 end

@@ -20,7 +20,8 @@
 	  			id:id
 	  		},
 	  		success: function(data){
-	  			$("#author").append(" "+data[0].name_author);
+	  			$("#author").append(" "+data[0].author.name);
+	  			console.log(data[0]);
 		    	var table = $('<table class="table table-bordered table-hover" id="paggination"></table>');
 		    	
 				var thead =$('<thead></thead>');
@@ -49,23 +50,19 @@
 		    		tr.append(td);
 
 					var td = $("<td></td>");
-	  				tagsParse=data[i].tag.split(/[",:;]/);
-
-	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[4]);
-	  				td.append(tag);
-	  				
-	  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[10]);
-	  				td.append(tag);
-
-	  				var tag = $('<code></code>').html(tagsParse[16]);
-	  				td.append(tag);
-
+					for (var j = 0; j<data[i].tags.length; j++){
+		  				var tag = $('<code style="margin-right:10px;"></code>')
+		  				.html($('<a href="/tag?='+data[i].tags[j].id+'"></a>').html(data[i].tags[j].label));
+		  				td.append(tag);
+					}
 		    		tr.append(td);
 
 		    		table.append(tr);
 	    		}
 				$("#tableAuthors").html(table);	
-				$("#paggination").DataTable({aaSorting:[]});
+				$("#paggination").DataTable({
+					aaSorting:[]
+				});
 	  		}
 		})
 	}

@@ -26,18 +26,14 @@
 	  		},
 	  		success: function(data){
 	  			$("#label").html(data.label);
-  				tagsParse=data.tag.split(/[",:;]/);
-
-  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[4]);
-  				$("#tags").append(tag);
-  				
-  				var tag = $('<code style="margin-right:10px;"></code>').html(tagsParse[10]);
-  				$("#tags").append(tag);
-
-  				var tag = $('<code></code>').html(tagsParse[16]);
-  				$("#tags").append(tag);
-
-	  			$("#author").html("Автор: "+data.name_author);
+				var td = $("<td></td>");
+				for (var j = 0; j<data.tags.length; j++){
+	  				var tag = $('<code style="margin-right:10px;"></code>')
+	  				.html($('<a href="/tag?='+data.tags[j].id+'"></a>').html(data.tags[j].label));
+	  				td.append(tag);
+				}
+	    		$("#tags").append(td);
+	  			$("#author").html("Автор: "+data.author.name);
 	  			$("#text").html(data.text);
 	  		}
 		})

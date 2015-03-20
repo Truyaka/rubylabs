@@ -6,6 +6,7 @@ class CreateAuthors < ActiveRecord::Migration
       t.string :city
       t.string :adress
       t.string :birth
+      t.integer :posts
     end
   end
 end
