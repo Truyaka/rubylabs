@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   get 'getPost' => 'listauthors#showPost'
   get 'getComments' => 'listauthors#showPostComments'
   get 'getPostsByTag' => 'listauthors#showPostByTags'
+  #orders
+  get 'orders' => 'orderlist#orderPage'
+  get 'getOrders' => 'orderlist#orders'
 end

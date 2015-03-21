@@ -1,0 +1,23 @@
+<div id="orders">
+	
+</div>
+<script type="text/javascript">
+	function getOrders(){
+		$.ajax({
+	  		url: '/getOrders',
+	  		success: function(data){
+				var table = $('<table class="table table-bordered table-hover text-center"></table>');
+	  			for(var i=0;i<data.length;i++){
+					var tr =$('<tr></tr>');
+					var path = data[i].split('/');
+					var td=$('<td href="'+path[1]+'/'+path[2]+'"></td>');
+					td.text(i+1 + 'выгрузка');
+					tr.append(td);
+					table.append(tr);
+	  			}
+	  			$('#orders').append(table); 
+	  		} 		
+		})
+	}
+	getOrders();
+	</script>
